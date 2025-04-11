@@ -1,36 +1,22 @@
+import 'dart:io';
+import 'package:flex_sidebar/src/flex_sidebar_controller.dart';
 import 'package:flutter/material.dart';
-import 'sidebar_item.dart';
+import 'flex_sidebar_item.dart';
 import 'package:collection/collection.dart';
 
 class FlexSidebar extends StatefulWidget {
-  const FlexSidebar(
-      {super.key,
-      required this.items,
-      required this.primaryWidget,
-      required this.secondaryWidget,
-      this.pinned = true,
-      this.currentIndex,
-      this.maxWidth = 300,
-      this.minWidth = 60,
-      this.resizeAnimCurve = Curves.easeOutCirc,
-      this.normalDecoration = const BoxDecoration(
-          borderRadius:
-              BorderRadiusDirectional.horizontal(end: Radius.circular(40)),
-          color: Color.fromARGB(255, 171, 228, 255)),
-      this.minimizedDecoration = const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(40)),
-          color: Color.fromARGB(255, 119, 212, 255))});
+  const FlexSidebar({
+    super.key,
+    required this.items,
+    required this.primaryWidget,
+    required this.secondaryWidget,
+    required this.controller,
+  });
 
-  final List<SidebarItem> items;
+  final FlexSidebarController controller;
+  final List<FlexSidebarItem> items;
   final Widget primaryWidget;
   final Widget secondaryWidget;
-  final bool pinned;
-  final double maxWidth;
-  final double minWidth;
-  final BoxDecoration normalDecoration;
-  final BoxDecoration minimizedDecoration;
-  final int? currentIndex;
-  final Curve resizeAnimCurve;
 
   @override
   State<FlexSidebar> createState() => _FlexSidebarState();
@@ -43,17 +29,19 @@ class _FlexSidebarState extends State<FlexSidebar> {
   @override
   void initState() {
     super.initState();
-    _pinned = widget.pinned;
-    _minimized = !widget.pinned;
+    _pinned = widget.controller.pinned;
+    _minimized = !widget.controller.pinned;
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedSize(
       duration: const Duration(milliseconds: 500),
-      curve: widget.resizeAnimCurve,
+      curve: widget.controller.resizeAnimCurve,
       child: SizedBox(
-        width: _minimized ? widget.minWidth : widget.maxWidth,
+        width: _minimized
+            ? widget.controller.minWidth
+            : widget.controller.maxWidth,
         child: Padding(
           padding: EdgeInsetsDirectional.only(start: _minimized ? 10 : 0),
           child: MouseRegion(
@@ -69,8 +57,8 @@ class _FlexSidebarState extends State<FlexSidebar> {
                   }),
             child: Container(
               decoration: _minimized
-                  ? widget.minimizedDecoration
-                  : widget.normalDecoration,
+                  ? widget.controller.minimizedDecoration
+                  : widget.controller.normalDecoration,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -88,7 +76,7 @@ class _FlexSidebarState extends State<FlexSidebar> {
                     children: [
                       ...widget.items.mapIndexed((i, e) => Padding(
                             padding: const EdgeInsets.symmetric(vertical: 5.0),
-                            child: SidebarItem(
+                            child: FlexSidebarItem(
                               icon: e.icon,
                               label: e.label,
                               onTap: e.onTap == null
@@ -99,30 +87,34 @@ class _FlexSidebarState extends State<FlexSidebar> {
                                       });
                                       e.onTap?.call();
                                     },
-                              isSelected:
-                                  (i == (widget.currentIndex ?? _currentIndex))
-                                      ? true
-                                      : false,
+                              isSelected: (i ==
+                                      (widget.controller.currentIndex ??
+                                          _currentIndex))
+                                  ? true
+                                  : false,
                               minimized: _minimized,
                               hoverAnimationEnabled: e.hoverAnimationEnabled,
                               hoverAnimColor: e.hoverAnimColor,
                             ),
                           )),
-                      MaterialButton(
-                          onPressed: () {
-                            setState(() {
-                              _pinned = !_pinned;
-                            });
-                          },
-                          child: _minimized
-                              ? const SizedBox.shrink()
-                              : Center(
-                                  child: Icon(
-                                    _pinned
-                                        ? Icons.push_pin
-                                        : Icons.push_pin_outlined,
-                                  ),
-                                ))
+                      (Platform.isAndroid || Platform.isIOS)
+                          ? const SizedBox.shrink()
+                          : MaterialButton(
+                              onPressed: () {
+                                setState(() {
+                                  _pinned = !_pinned;
+                                });
+                              },
+                              child: _minimized
+                                  ? const SizedBox.shrink()
+                                  : Center(
+                                      child: Icon(
+                                        _pinned
+                                            ? Icons.push_pin
+                                            : Icons.push_pin_outlined,
+                                      ),
+                                    ),
+                            ),
                     ],
                   )
                 ],

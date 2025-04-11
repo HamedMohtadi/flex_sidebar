@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'utils/side_gradient_transition.dart';
-import 'utils/extensions.dart';
+import 'side_gradient_transition.dart';
+import 'extensions.dart';
 
-class SidebarItem extends StatefulWidget {
-  const SidebarItem({
+class FlexSidebarItem extends StatefulWidget {
+  const FlexSidebarItem({
     super.key,
     required this.icon,
     required this.label,
@@ -24,10 +24,10 @@ class SidebarItem extends StatefulWidget {
   final Color hoverAnimColor;
 
   @override
-  State<SidebarItem> createState() => _SidebarItemState();
+  State<FlexSidebarItem> createState() => _FlexSidebarItemState();
 }
 
-class _SidebarItemState extends State<SidebarItem>
+class _FlexSidebarItemState extends State<FlexSidebarItem>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animation;
 
