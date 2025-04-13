@@ -35,10 +35,13 @@ class StackExample extends StatelessWidget {
                 controller: flexSidebarController,
                 theme: FlexThemeData(
                     itemThemeData: FlexItemThemeData(
-                        itemTextStyle: TextStyle(fontSize: 43))),
+                        itemTextStyle: TextStyle(fontSize: 73))),
                 items: [
                   FlexSidebarItem(
                     icon: Icon(Icons.ac_unit_sharp),
+                    onTap: () {
+                      debugPrint("test");
+                    },
                     label: Text("sharp"),
                     itemThemeData:
                         FlexItemThemeData(itemPadding: EdgeInsets.all(0)),

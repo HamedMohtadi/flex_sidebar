@@ -95,7 +95,8 @@ class _FlexSidebarState extends State<FlexSidebar> {
                               : false,
                           minimized: _minimized,
                           hoverAnimationEnabled: e.hoverAnimationEnabled,
-                          itemThemeData: e.itemThemeData,
+                          itemThemeData:
+                              e.itemThemeData ?? widget.theme.itemThemeData,
                         )),
                     (!kIsWeb && (Platform.isAndroid || Platform.isIOS))
                         ? const SizedBox.shrink()

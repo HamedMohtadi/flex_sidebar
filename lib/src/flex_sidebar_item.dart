@@ -11,7 +11,7 @@ class FlexSidebarItem extends StatefulWidget {
     this.onTap,
     this.isSelected = false,
     this.minimized = false,
-    this.itemThemeData = const FlexItemThemeData(),
+    this.itemThemeData,
     this.hoverAnimationEnabled = true,
   }) : _showAnimation = (onTap == null) ? false : hoverAnimationEnabled;
 
@@ -22,7 +22,7 @@ class FlexSidebarItem extends StatefulWidget {
   final bool isSelected;
   final bool hoverAnimationEnabled;
   final bool _showAnimation;
-  final FlexItemThemeData itemThemeData;
+  final FlexItemThemeData? itemThemeData;
 
   @override
   State<FlexSidebarItem> createState() => _FlexSidebarItemState();
@@ -47,8 +47,9 @@ class _FlexSidebarItemState extends State<FlexSidebarItem>
 
   @override
   Widget build(BuildContext context) {
+    final itemThemeData = widget.itemThemeData ?? FlexItemThemeData();
     return Padding(
-      padding: widget.itemThemeData.itemPadding,
+      padding: itemThemeData.itemPadding,
       child: InkWell(
         onHover: (isHovered) => widget._showAnimation
             ? setState(() {
@@ -58,7 +59,7 @@ class _FlexSidebarItemState extends State<FlexSidebarItem>
         onTap: () => widget.onTap?.call(),
         child: SideGradientTransition(
           animation: _animation,
-          hoverAnimColor: widget.itemThemeData.hoverAnimColor,
+          hoverAnimColor: itemThemeData.hoverAnimColor,
           child: Row(
             mainAxisAlignment: widget.minimized
                 ? MainAxisAlignment.center
@@ -66,26 +67,26 @@ class _FlexSidebarItemState extends State<FlexSidebarItem>
             children: [
               widget.icon.copyWith(
                 color: widget.onTap == null
-                    ? widget.itemThemeData.disabledItemColor
+                    ? itemThemeData.disabledItemColor
                     : (widget.isSelected
-                        ? widget.itemThemeData.selectedItemColor
-                        : widget.itemThemeData.itemColor),
+                        ? itemThemeData.selectedItemColor
+                        : itemThemeData.itemColor),
               ),
               widget.minimized
                   ? const SizedBox.shrink()
                   : Expanded(
                       child: Padding(
-                      padding: widget.itemThemeData.labelPadding,
+                      padding: itemThemeData.labelPadding,
                       child: Text(
                         widget.label.data ?? '',
-                        style: (widget.label.style ??
-                                widget.itemThemeData.itemTextStyle)
-                            .copyWith(
+                        style:
+                            (widget.label.style ?? itemThemeData.itemTextStyle)
+                                .copyWith(
                           color: widget.onTap == null
-                              ? widget.itemThemeData.disabledItemColor
+                              ? itemThemeData.disabledItemColor
                               : (widget.isSelected
-                                  ? widget.itemThemeData.selectedItemColor
-                                  : widget.itemThemeData.itemColor),
+                                  ? itemThemeData.selectedItemColor
+                                  : itemThemeData.itemColor),
                         ),
                       ),
                     )),
