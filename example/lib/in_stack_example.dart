@@ -3,16 +3,8 @@ import 'package:flex_sidebar/flex_sidebar.dart';
 
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
-class MainWidget extends StatelessWidget {
-  const MainWidget(
-      {super.key,
-      required this.title,
-      required this.currentIndex,
-      required this.child});
-
-  final String title;
-  final int currentIndex;
-  final Widget child;
+class StackExample extends StatelessWidget {
+  const StackExample({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +15,7 @@ class MainWidget extends StatelessWidget {
           Scaffold(
               appBar: AppBar(
                 title: Text(
-                  title,
+                  "Title",
                   style: const TextStyle(
                       fontFamily: 'Yekan',
                       fontSize: 32,
@@ -32,14 +24,29 @@ class MainWidget extends StatelessWidget {
                 ),
                 centerTitle: true,
               ),
-              body: SafeArea(child: child)),
+              body: SafeArea(child: Text("data"))),
           Positioned.directional(
             textDirection: Directionality.of(context),
             start: 0,
             top: 0,
             bottom: 0,
             child: PointerInterceptor(
-              child: FlexSidebar(),
+              child: FlexSidebar(
+                controller: flexSidebarController,
+                theme: FlexThemeData(
+                    itemThemeData: FlexItemThemeData(
+                        itemTextStyle: TextStyle(fontSize: 43))),
+                items: [
+                  FlexSidebarItem(
+                    icon: Icon(Icons.ac_unit_sharp),
+                    label: Text("sharp"),
+                    itemThemeData:
+                        FlexItemThemeData(itemPadding: EdgeInsets.all(0)),
+                  )
+                ],
+                primaryWidget: Text("data"),
+                secondaryWidget: Text("data"),
+              ),
             ),
           ),
         ],

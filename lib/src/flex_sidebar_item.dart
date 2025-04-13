@@ -1,3 +1,4 @@
+import 'package:flex_sidebar/src/flex_item_theme_data.dart';
 import 'package:flutter/material.dart';
 import 'side_gradient_transition.dart';
 import 'extensions.dart';
@@ -10,7 +11,7 @@ class FlexSidebarItem extends StatefulWidget {
     this.onTap,
     this.isSelected = false,
     this.minimized = false,
-    this.hoverAnimColor = Colors.white70,
+    this.itemThemeData = const FlexItemThemeData(),
     this.hoverAnimationEnabled = true,
   }) : _showAnimation = (onTap == null) ? false : hoverAnimationEnabled;
 
@@ -21,7 +22,7 @@ class FlexSidebarItem extends StatefulWidget {
   final bool isSelected;
   final bool hoverAnimationEnabled;
   final bool _showAnimation;
-  final Color hoverAnimColor;
+  final FlexItemThemeData itemThemeData;
 
   @override
   State<FlexSidebarItem> createState() => _FlexSidebarItemState();
@@ -46,35 +47,50 @@ class _FlexSidebarItemState extends State<FlexSidebarItem>
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onHover: (isHovered) => widget._showAnimation
-          ? setState(() {
-              isHovered ? _animation.animateTo(1) : _animation.animateTo(0);
-            })
-          : {},
-      onTap: () => widget.onTap?.call(),
-      child: SideGradientTransition(
-        animation: _animation,
-        hoverAnimColor: widget.hoverAnimColor,
-        child: Row(
-          children: [
-            widget.icon.copyWith(
-              color: widget.onTap == null
-                  ? Colors.black12
-                  : (widget.isSelected ? Colors.black : Colors.black45),
-            ),
-            widget.minimized
-                ? const SizedBox.shrink()
-                : Expanded(
-                    child: Text(
-                    widget.label.data ?? '',
-                    style: widget.label.style?.copyWith(
-                      color: widget.onTap == null
-                          ? Colors.black12
-                          : (widget.isSelected ? Colors.black : Colors.black54),
-                    ),
-                  )),
-          ],
+    return Padding(
+      padding: widget.itemThemeData.itemPadding,
+      child: InkWell(
+        onHover: (isHovered) => widget._showAnimation
+            ? setState(() {
+                isHovered ? _animation.animateTo(1) : _animation.animateTo(0);
+              })
+            : {},
+        onTap: () => widget.onTap?.call(),
+        child: SideGradientTransition(
+          animation: _animation,
+          hoverAnimColor: widget.itemThemeData.hoverAnimColor,
+          child: Row(
+            mainAxisAlignment: widget.minimized
+                ? MainAxisAlignment.center
+                : MainAxisAlignment.start,
+            children: [
+              widget.icon.copyWith(
+                color: widget.onTap == null
+                    ? widget.itemThemeData.disabledItemColor
+                    : (widget.isSelected
+                        ? widget.itemThemeData.selectedItemColor
+                        : widget.itemThemeData.itemColor),
+              ),
+              widget.minimized
+                  ? const SizedBox.shrink()
+                  : Expanded(
+                      child: Padding(
+                      padding: widget.itemThemeData.labelPadding,
+                      child: Text(
+                        widget.label.data ?? '',
+                        style: (widget.label.style ??
+                                widget.itemThemeData.itemTextStyle)
+                            .copyWith(
+                          color: widget.onTap == null
+                              ? widget.itemThemeData.disabledItemColor
+                              : (widget.isSelected
+                                  ? widget.itemThemeData.selectedItemColor
+                                  : widget.itemThemeData.itemColor),
+                        ),
+                      ),
+                    )),
+            ],
+          ),
         ),
       ),
     );
