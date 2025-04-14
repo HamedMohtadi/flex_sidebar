@@ -3,9 +3,14 @@ import 'package:flex_sidebar/flex_sidebar.dart';
 
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
-class StackExample extends StatelessWidget {
+class StackExample extends StatefulWidget {
   const StackExample({super.key});
 
+  @override
+  State<StackExample> createState() => _StackExampleState();
+}
+
+class _StackExampleState extends State<StackExample> {
   @override
   Widget build(BuildContext context) {
     final flexSidebarController = FlexSidebarController();
@@ -33,9 +38,6 @@ class StackExample extends StatelessWidget {
             child: PointerInterceptor(
               child: FlexSidebar(
                 controller: flexSidebarController,
-                theme: FlexThemeData(
-                    itemThemeData: FlexItemThemeData(
-                        itemTextStyle: TextStyle(fontSize: 73))),
                 items: [
                   FlexSidebarItem(
                     icon: Icon(Icons.ac_unit_sharp),
@@ -43,11 +45,19 @@ class StackExample extends StatelessWidget {
                       debugPrint("test");
                     },
                     label: Text("sharp"),
-                    itemThemeData:
-                        FlexItemThemeData(itemPadding: EdgeInsets.all(0)),
-                  )
+                  ),
+                  FlexSidebarItem(
+                    icon: Icon(Icons.ac_unit_sharp),
+                    onTap: () {
+                      debugPrint("test");
+                    },
+                    label: Text("sharp"),
+                  ),
                 ],
-                primaryWidget: Text("data"),
+                primaryWidget: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Image.asset('assets/images/person.png'),
+                ),
                 secondaryWidget: Text("data"),
               ),
             ),

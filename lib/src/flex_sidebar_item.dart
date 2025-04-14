@@ -66,6 +66,7 @@ class _FlexSidebarItemState extends State<FlexSidebarItem>
                 : MainAxisAlignment.start,
             children: [
               widget.icon.copyWith(
+                size: widget.itemThemeData?.iconSize,
                 color: widget.onTap == null
                     ? itemThemeData.disabledItemColor
                     : (widget.isSelected

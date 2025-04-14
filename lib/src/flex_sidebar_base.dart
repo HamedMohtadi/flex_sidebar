@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:flex_sidebar/src/flex_sidebar_controller.dart';
-import 'package:flex_sidebar/src/flex_theme.dart';
+import 'package:flex_sidebar/src/flex_theme_data.dart';
 import 'package:flutter/material.dart';
 import 'flex_sidebar_item.dart';
 import 'package:collection/collection.dart';
@@ -75,29 +75,38 @@ class _FlexSidebarState extends State<FlexSidebar> {
                           ),
                   ],
                 ),
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: widget.theme.itemsAlignment,
+                    children: [
+                      ...widget.items.mapIndexed((i, e) => FlexSidebarItem(
+                            icon: e.icon,
+                            label: e.label,
+                            onTap: e.onTap == null
+                                ? null
+                                : () {
+                                    setState(() {
+                                      _currentIndex = i;
+                                    });
+                                    e.onTap?.call();
+                                  },
+                            isSelected: (i ==
+                                    (widget.controller.currentIndex ??
+                                        _currentIndex))
+                                ? true
+                                : false,
+                            minimized: _minimized,
+                            hoverAnimationEnabled: e.hoverAnimationEnabled,
+                            itemThemeData:
+                                e.itemThemeData ?? widget.theme.itemThemeData,
+                          )),
+                    ],
+                  ),
+                ),
                 Column(
                   children: [
-                    ...widget.items.mapIndexed((i, e) => FlexSidebarItem(
-                          icon: e.icon,
-                          label: e.label,
-                          onTap: e.onTap == null
-                              ? null
-                              : () {
-                                  setState(() {
-                                    _currentIndex = i;
-                                  });
-                                  e.onTap?.call();
-                                },
-                          isSelected: (i ==
-                                  (widget.controller.currentIndex ??
-                                      _currentIndex))
-                              ? true
-                              : false,
-                          minimized: _minimized,
-                          hoverAnimationEnabled: e.hoverAnimationEnabled,
-                          itemThemeData:
-                              e.itemThemeData ?? widget.theme.itemThemeData,
-                        )),
+                    widget.theme.footerDivider,
                     (!kIsWeb && (Platform.isAndroid || Platform.isIOS))
                         ? const SizedBox.shrink()
                         : MaterialButton(
