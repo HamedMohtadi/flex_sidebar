@@ -5,7 +5,7 @@ class FlexItemThemeData {
     this.itemTextStyle = const TextStyle(fontSize: 20),
     this.iconPadding = const EdgeInsetsDirectional.fromSTEB(2, 0, 0, 0),
     this.labelPadding = const EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
-    this.itemPadding = const EdgeInsetsDirectional.fromSTEB(0, 5, 0, 5),
+    this.itemPadding = const EdgeInsetsDirectional.fromSTEB(5, 10, 0, 10),
     this.hoverAnimColor = Colors.white70,
     this.itemColor = Colors.black45,
     this.selectedItemColor = Colors.black,

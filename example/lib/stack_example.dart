@@ -11,6 +11,7 @@ class StackExample extends StatefulWidget {
 }
 
 class _StackExampleState extends State<StackExample> {
+  String label = "Selected Item";
   @override
   Widget build(BuildContext context) {
     final flexSidebarController = FlexSidebarController();
@@ -24,7 +25,7 @@ class _StackExampleState extends State<StackExample> {
                 color: Theme.of(context).primaryColor.withAlpha(100),
                 child: Center(
                   child: Text(
-                    "Item 1",
+                    label,
                     style: TextStyle(
                         fontSize: 53, color: Theme.of(context).hintColor),
                   ),
@@ -40,18 +41,40 @@ class _StackExampleState extends State<StackExample> {
                 controller: flexSidebarController,
                 items: [
                   FlexSidebarItem(
-                    icon: Icon(Icons.ac_unit_sharp),
+                    icon: Icon(Icons.import_contacts),
                     onTap: () {
-                      debugPrint("test");
+                      setState(() {
+                        label = "Selected Item";
+                      });
                     },
-                    label: Text("sharp"),
+                    label: Text("selected Item"),
                   ),
                   FlexSidebarItem(
-                    icon: Icon(Icons.ac_unit_sharp),
+                    icon: Icon(Icons.import_contacts),
                     onTap: () {
-                      debugPrint("test");
+                      setState(() {
+                        label = "Regular Item";
+                      });
                     },
-                    label: Text("sharp"),
+                    label: Text("regular Item"),
+                  ),
+                  FlexSidebarItem(
+                      icon: Icon(Icons.disabled_by_default),
+                      label: Text("disabled Item")),
+                  FlexSidebarItem(
+                    icon: Icon(Icons.dashboard_customize),
+                    onTap: () {
+                      setState(() {
+                        label = "Custom Item";
+                      });
+                    },
+                    label: Text("custom Item"),
+                    itemThemeData: FlexItemThemeData(
+                        itemColor: Theme.of(context).primaryColorDark,
+                        selectedItemColor: Theme.of(context).cardColor,
+                        hoverAnimColor: Theme.of(context).focusColor,
+                        itemPadding:
+                            EdgeInsetsDirectional.fromSTEB(5, 10, 0, 50)),
                   ),
                 ],
                 primaryWidget: Padding(

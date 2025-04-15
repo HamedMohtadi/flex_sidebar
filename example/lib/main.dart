@@ -1,4 +1,6 @@
-import 'package:flex_sidebar_example/in_stack_example.dart';
+import 'package:flex_sidebar_example/row_example.dart';
+import 'package:flex_sidebar_example/rtl_example.dart';
+import 'package:flex_sidebar_example/stack_example.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,7 +13,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: const StackExample(),
+      home: Directionality(
+          textDirection: TextDirection.rtl, child: const RtlExample()),
     );
   }
 }
