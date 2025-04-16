@@ -11,7 +11,7 @@ class StackExample extends StatefulWidget {
 }
 
 class _StackExampleState extends State<StackExample> {
-  String label = "Selected Item";
+  String label = "Parent Item";
   @override
   Widget build(BuildContext context) {
     return Material(
