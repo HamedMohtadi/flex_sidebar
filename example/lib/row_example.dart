@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flex_sidebar/flex_sidebar.dart';
 
-import 'package:pointer_interceptor/pointer_interceptor.dart';
-
 class RowExample extends StatefulWidget {
   const RowExample({super.key});
 
@@ -14,13 +12,12 @@ class _RowExampleState extends State<RowExample> {
   String label = "Selected Item";
   @override
   Widget build(BuildContext context) {
-    final flexSidebarController = FlexSidebarController();
     return Material(
       color: Theme.of(context).primaryColor.withAlpha(100),
       child: Row(
         children: [
           FlexSidebar(
-            controller: flexSidebarController,
+            controller: FlexSidebarController(),
             theme: FlexThemeData(
                 normalDecoration:
                     BoxDecoration(color: Theme.of(context).primaryColorLight),

@@ -13,6 +13,7 @@ class FlexSidebarItem extends StatefulWidget {
     this.minimized = false,
     this.itemThemeData,
     this.hoverAnimationEnabled = true,
+    this.subitems = const [],
   }) : _showAnimation = (onTap == null) ? false : hoverAnimationEnabled;
 
   final Icon icon;
@@ -23,6 +24,7 @@ class FlexSidebarItem extends StatefulWidget {
   final bool hoverAnimationEnabled;
   final bool _showAnimation;
   final FlexItemThemeData? itemThemeData;
+  final List<FlexSidebarItem> subitems;
 
   @override
   State<FlexSidebarItem> createState() => _FlexSidebarItemState();
@@ -31,7 +33,7 @@ class FlexSidebarItem extends StatefulWidget {
 class _FlexSidebarItemState extends State<FlexSidebarItem>
     with SingleTickerProviderStateMixin {
   late final AnimationController _animation;
-
+  bool _extended = false;
   @override
   void initState() {
     super.initState();
@@ -50,50 +52,68 @@ class _FlexSidebarItemState extends State<FlexSidebarItem>
     final itemThemeData = widget.itemThemeData ?? FlexItemThemeData();
     return Padding(
       padding: itemThemeData.itemPadding,
-      child: InkWell(
-        onHover: (isHovered) => widget._showAnimation
-            ? setState(() {
-                isHovered ? _animation.animateTo(1) : _animation.animateTo(0);
-              })
-            : {},
-        onTap: () => widget.onTap?.call(),
-        child: SideGradientTransition(
-          animation: _animation,
-          hoverAnimColor: itemThemeData.hoverAnimColor,
-          child: Row(
-            mainAxisAlignment: widget.minimized
-                ? MainAxisAlignment.center
-                : MainAxisAlignment.start,
-            children: [
-              widget.icon.copyWith(
-                size: widget.itemThemeData?.iconSize,
-                color: widget.onTap == null
-                    ? itemThemeData.disabledItemColor
-                    : (widget.isSelected
-                        ? itemThemeData.selectedItemColor
-                        : itemThemeData.itemColor),
-              ),
-              widget.minimized
-                  ? const SizedBox.shrink()
-                  : Expanded(
-                      child: Padding(
-                      padding: itemThemeData.labelPadding,
-                      child: Text(
-                        widget.label.data ?? '',
-                        style:
-                            (widget.label.style ?? itemThemeData.itemTextStyle)
+      child: Column(
+        children: [
+          InkWell(
+            onHover: (isHovered) => widget._showAnimation
+                ? setState(() {
+                    isHovered
+                        ? _animation.animateTo(1)
+                        : _animation.animateTo(0);
+                  })
+                : {},
+            onTap: () => widget.onTap?.call(),
+            child: SideGradientTransition(
+              animation: _animation,
+              hoverAnimColor: itemThemeData.hoverAnimColor,
+              child: Row(
+                mainAxisAlignment: widget.minimized
+                    ? MainAxisAlignment.center
+                    : MainAxisAlignment.start,
+                children: [
+                  widget.icon.copyWith(
+                    size: widget.itemThemeData?.iconSize,
+                    color: widget.onTap == null
+                        ? itemThemeData.disabledItemColor
+                        : (widget.isSelected
+                            ? itemThemeData.selectedItemColor
+                            : itemThemeData.itemColor),
+                  ),
+                  widget.minimized
+                      ? const SizedBox.shrink()
+                      : Expanded(
+                          child: Padding(
+                          padding: itemThemeData.labelPadding,
+                          child: Text(
+                            widget.label.data ?? '',
+                            style: (widget.label.style ??
+                                    itemThemeData.itemTextStyle)
                                 .copyWith(
-                          color: widget.onTap == null
-                              ? itemThemeData.disabledItemColor
-                              : (widget.isSelected
-                                  ? itemThemeData.selectedItemColor
-                                  : itemThemeData.itemColor),
-                        ),
-                      ),
-                    )),
-            ],
+                              color: widget.onTap == null
+                                  ? itemThemeData.disabledItemColor
+                                  : (widget.isSelected
+                                      ? itemThemeData.selectedItemColor
+                                      : itemThemeData.itemColor),
+                            ),
+                          ),
+                        )),
+                  widget.minimized
+                      ? const SizedBox.shrink()
+                      : widget.subitems.isNotEmpty
+                          ? IconButton(
+                              onPressed: () => setState(() {
+                                    _extended = !_extended;
+                                  }),
+                              icon: Icon(_extended
+                                  ? Icons.keyboard_arrow_up
+                                  : Icons.keyboard_arrow_down))
+                          : SizedBox.shrink()
+                ],
+              ),
+            ),
           ),
-        ),
+          if (_extended && !widget.minimized) ...widget.subitems
+        ],
       ),
     );
   }

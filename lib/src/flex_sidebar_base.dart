@@ -29,12 +29,13 @@ class FlexSidebar extends StatefulWidget {
 class _FlexSidebarState extends State<FlexSidebar> {
   late bool _minimized;
   late bool _pinned;
-  int _currentIndex = 0;
+  late Map<int, int> _currentIndex;
   @override
   void initState() {
     super.initState();
     _pinned = widget.controller.pinned;
     _minimized = !widget.controller.pinned;
+    _currentIndex = {widget.controller.index: -1};
   }
 
   @override
@@ -80,27 +81,49 @@ class _FlexSidebarState extends State<FlexSidebar> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: widget.theme.itemsAlignment,
                     children: [
-                      ...widget.items.mapIndexed((i, e) => FlexSidebarItem(
-                            icon: e.icon,
-                            label: e.label,
-                            onTap: e.onTap == null
-                                ? null
-                                : () {
-                                    setState(() {
-                                      _currentIndex = i;
-                                    });
-                                    e.onTap?.call();
-                                  },
-                            isSelected: (i ==
-                                    (widget.controller.currentIndex ??
-                                        _currentIndex))
-                                ? true
-                                : false,
-                            minimized: _minimized,
-                            hoverAnimationEnabled: e.hoverAnimationEnabled,
-                            itemThemeData:
-                                e.itemThemeData ?? widget.theme.itemThemeData,
-                          )),
+                      ...widget.items.mapIndexed(
+                        (i, e) => FlexSidebarItem(
+                          icon: e.icon,
+                          label: e.label,
+                          onTap: e.onTap == null
+                              ? null
+                              : () {
+                                  setState(() {
+                                    widget.controller.setIndex(i);
+                                    _currentIndex = {i: -1};
+                                  });
+                                  e.onTap?.call();
+                                },
+                          isSelected: _currentIndex.keys.contains(i),
+                          minimized: _minimized,
+                          hoverAnimationEnabled: e.hoverAnimationEnabled,
+                          itemThemeData:
+                              e.itemThemeData ?? widget.theme.itemThemeData,
+                          subitems: e.subitems
+                              .mapIndexed(
+                                (j, el) => FlexSidebarItem(
+                                  icon: el.icon,
+                                  label: el.label,
+                                  onTap: el.onTap == null
+                                      ? null
+                                      : () {
+                                          setState(() {
+                                            widget.controller.setIndex(i);
+                                            _currentIndex = {i: j};
+                                          });
+                                          el.onTap?.call();
+                                        },
+                                  isSelected: _currentIndex[i] == j,
+                                  minimized: _minimized,
+                                  hoverAnimationEnabled:
+                                      el.hoverAnimationEnabled,
+                                  itemThemeData: el.itemThemeData ??
+                                      widget.theme.itemThemeData,
+                                ),
+                              )
+                              .toList(),
+                        ),
+                      ),
                     ],
                   ),
                 ),

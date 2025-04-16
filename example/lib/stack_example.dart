@@ -14,7 +14,6 @@ class _StackExampleState extends State<StackExample> {
   String label = "Selected Item";
   @override
   Widget build(BuildContext context) {
-    final flexSidebarController = FlexSidebarController();
     return Material(
       child: Stack(
         children: [
@@ -38,16 +37,43 @@ class _StackExampleState extends State<StackExample> {
             bottom: 0,
             child: PointerInterceptor(
               child: FlexSidebar(
-                controller: flexSidebarController,
+                controller: FlexSidebarController(),
+                theme: FlexThemeData(itemsAlignment: MainAxisAlignment.start),
                 items: [
                   FlexSidebarItem(
                     icon: Icon(Icons.import_contacts),
                     onTap: () {
                       setState(() {
-                        label = "Selected Item";
+                        label = "Parent Item";
                       });
                     },
-                    label: Text("selected Item"),
+                    label: Text("Parent Item"),
+                    subitems: [
+                      FlexSidebarItem(
+                        itemThemeData: FlexItemThemeData(
+                            itemPadding:
+                                EdgeInsetsDirectional.fromSTEB(30, 5, 0, 5)),
+                        icon: Icon(Icons.circle),
+                        onTap: () {
+                          setState(() {
+                            label = "Sub Item 1";
+                          });
+                        },
+                        label: Text("Sub Item 1"),
+                      ),
+                      FlexSidebarItem(
+                        itemThemeData: FlexItemThemeData(
+                            itemPadding:
+                                EdgeInsetsDirectional.fromSTEB(30, 5, 0, 5)),
+                        icon: Icon(Icons.circle),
+                        onTap: () {
+                          setState(() {
+                            label = "Sub Item 2";
+                          });
+                        },
+                        label: Text("Sub Item 2"),
+                      ),
+                    ],
                   ),
                   FlexSidebarItem(
                     icon: Icon(Icons.import_contacts),
@@ -96,10 +122,14 @@ class _StackExampleState extends State<StackExample> {
                       "This can be a description",
                       style: TextStyle(color: Theme.of(context).dividerColor),
                     ),
-                    Text(
-                      "another description!",
-                      style: TextStyle(
-                          color: Theme.of(context).dividerColor.withAlpha(200)),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 30),
+                      child: Text(
+                        "another description!",
+                        style: TextStyle(
+                            color:
+                                Theme.of(context).dividerColor.withAlpha(200)),
+                      ),
                     ),
                   ],
                 ),
