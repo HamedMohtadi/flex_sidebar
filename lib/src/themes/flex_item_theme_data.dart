@@ -13,6 +13,7 @@ class FlexItemThemeData {
     this.iconSize = 30,
   });
 
+  final TextStyle itemTextStyle;
   final EdgeInsetsDirectional iconPadding;
   final EdgeInsetsDirectional labelPadding;
   final EdgeInsetsDirectional itemPadding;
@@ -20,7 +21,6 @@ class FlexItemThemeData {
   final Color itemColor;
   final Color selectedItemColor;
   final Color disabledItemColor;
-  final TextStyle itemTextStyle;
   final double? iconSize;
 
   FlexItemThemeData copyWith(

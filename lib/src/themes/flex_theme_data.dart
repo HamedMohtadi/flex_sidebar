@@ -1,4 +1,4 @@
-import 'package:flex_sidebar/src/flex_item_theme_data.dart';
+import 'package:flex_sidebar/src/themes/flex_item_theme_data.dart';
 import 'package:flutter/material.dart';
 
 class FlexThemeData {

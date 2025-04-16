@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flex_sidebar/flex_sidebar.dart';
-
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 class StackExample extends StatefulWidget {

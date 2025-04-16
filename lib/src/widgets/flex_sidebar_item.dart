@@ -1,7 +1,7 @@
-import 'package:flex_sidebar/src/flex_item_theme_data.dart';
+import 'package:flex_sidebar/src/themes/flex_item_theme_data.dart';
 import 'package:flutter/material.dart';
-import 'side_gradient_transition.dart';
-import 'extensions.dart';
+import 'package:flex_sidebar/src/utils/side_gradient_transition.dart';
+import 'package:flex_sidebar/src/utils/extensions.dart';
 
 class FlexSidebarItem extends StatefulWidget {
   const FlexSidebarItem({

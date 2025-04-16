@@ -1,8 +1,8 @@
 import 'dart:io';
-import 'package:flex_sidebar/src/flex_sidebar_controller.dart';
-import 'package:flex_sidebar/src/flex_theme_data.dart';
+import 'package:flex_sidebar/src/controller/flex_sidebar_controller.dart';
+import 'package:flex_sidebar/src/themes/flex_theme_data.dart';
 import 'package:flutter/material.dart';
-import 'flex_sidebar_item.dart';
+import 'package:flex_sidebar/src/widgets/flex_sidebar_item.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 
