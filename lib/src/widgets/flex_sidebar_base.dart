@@ -77,55 +77,9 @@ class _FlexSidebarState extends State<FlexSidebar> {
                   ],
                 ),
                 Expanded(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: widget.theme.itemsAlignment,
-                    children: [
-                      ...widget.items.mapIndexed(
-                        (i, e) => FlexSidebarItem(
-                          icon: e.icon,
-                          label: e.label,
-                          onTap: e.onTap == null
-                              ? null
-                              : () {
-                                  setState(() {
-                                    widget.controller.setIndex(i);
-                                    _currentIndex = {i: -1};
-                                  });
-                                  e.onTap?.call();
-                                },
-                          isSelected: _currentIndex.keys.contains(i),
-                          minimized: _minimized,
-                          hoverAnimationEnabled: e.hoverAnimationEnabled,
-                          itemThemeData:
-                              e.itemThemeData ?? widget.theme.itemThemeData,
-                          subitems: e.subitems
-                              .mapIndexed(
-                                (j, el) => FlexSidebarItem(
-                                  icon: el.icon,
-                                  label: el.label,
-                                  onTap: el.onTap == null
-                                      ? null
-                                      : () {
-                                          setState(() {
-                                            widget.controller.setIndex(i);
-                                            _currentIndex = {i: j};
-                                          });
-                                          el.onTap?.call();
-                                        },
-                                  isSelected: _currentIndex[i] == j,
-                                  minimized: _minimized,
-                                  hoverAnimationEnabled:
-                                      el.hoverAnimationEnabled,
-                                  itemThemeData: el.itemThemeData ??
-                                      widget.theme.itemThemeData,
-                                ),
-                              )
-                              .toList(),
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: widget.theme.scrollableItems
+                      ? SingleChildScrollView(child: _ItemsListWidget())
+                      : _ItemsListWidget(),
                 ),
                 Column(
                   children: [
@@ -155,6 +109,56 @@ class _FlexSidebarState extends State<FlexSidebar> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _ItemsListWidget() {
+    return Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: widget.theme.itemsAlignment,
+      children: [
+        ...widget.items.mapIndexed(
+          (i, e) => FlexSidebarItem(
+            icon: e.icon,
+            label: e.label,
+            onTap: e.onTap == null
+                ? null
+                : () {
+                    setState(() {
+                      widget.controller.setIndex(i);
+                      _currentIndex = {i: -1};
+                    });
+                    e.onTap?.call();
+                  },
+            isSelected: _currentIndex.keys.contains(i),
+            minimized: _minimized,
+            hoverAnimationEnabled: e.hoverAnimationEnabled,
+            itemThemeData: e.itemThemeData ?? widget.theme.itemThemeData,
+            subitems: e.subitems
+                .mapIndexed(
+                  (j, el) => FlexSidebarItem(
+                    icon: el.icon,
+                    label: el.label,
+                    onTap: el.onTap == null
+                        ? null
+                        : () {
+                            setState(() {
+                              widget.controller.setIndex(i);
+                              _currentIndex = {i: j};
+                            });
+                            el.onTap?.call();
+                          },
+                    isSelected: _currentIndex[i] == j,
+                    minimized: _minimized,
+                    hoverAnimationEnabled: el.hoverAnimationEnabled,
+                    itemThemeData:
+                        el.itemThemeData ?? widget.theme.itemThemeData,
+                  ),
+                )
+                .toList(),
+          ),
+        ),
+      ],
     );
   }
 }

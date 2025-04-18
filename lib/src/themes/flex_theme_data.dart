@@ -9,6 +9,7 @@ class FlexThemeData {
       this.margin = const EdgeInsetsDirectional.all(0),
       this.itemThemeData = const FlexItemThemeData(),
       this.itemsAlignment = MainAxisAlignment.end,
+      this.scrollableItems = false,
       this.footerDivider = const Divider(
         indent: 5,
         endIndent: 5,
@@ -30,4 +31,5 @@ class FlexThemeData {
   final FlexItemThemeData itemThemeData;
   final MainAxisAlignment itemsAlignment;
   final Divider footerDivider;
+  final bool scrollableItems;
 }
