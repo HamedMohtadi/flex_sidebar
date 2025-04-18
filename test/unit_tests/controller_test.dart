@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:flex_sidebar/flex_sidebar.dart';
 
 main() {
-  group('controller unit tests', () {
+  group('controller unit tests/', () {
     test('setIndex', () {
       final controller = FlexSidebarController();
       controller.setIndex(10);

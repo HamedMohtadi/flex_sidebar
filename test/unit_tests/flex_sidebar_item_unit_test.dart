@@ -1,11 +1,9 @@
 import 'package:flex_sidebar/flex_sidebar.dart';
-import 'package:flex_sidebar/src/themes/themes.dart';
-import 'package:flex_sidebar/src/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('FlexSidebarItem unit tests', () {
+  group('FlexSidebarItem unit tests/', () {
     test('set theme', () {
       final flexSidebarItem = FlexSidebarItem(
         icon: Icon(Icons.import_contacts),
@@ -56,6 +54,19 @@ void main() {
       expect(sidebar.items.first.itemThemeData?.disabledItemColor, Colors.blue);
       expect(sidebar.items.first.itemThemeData?.hoverAnimColor,
           FlexItemThemeData().hoverAnimColor);
+    });
+
+    test('color changed based onTap function', () {
+      final item = FlexSidebarItem(icon: Icon(Icons.abc), label: Text("abc"));
+      expect(item.icon.color, item.itemThemeData?.disabledItemColor);
+      expect(item.label.style?.color, item.itemThemeData?.disabledItemColor);
+      final item2 = FlexSidebarItem(
+        icon: Icon(Icons.abc),
+        label: Text("abc"),
+        onTap: () => debugPrint("abc Tapped!"),
+      );
+      expect(item2.icon.color, item2.itemThemeData?.itemColor);
+      expect(item2.label.style?.color, item2.itemThemeData?.disabledItemColor);
     });
   });
 }
