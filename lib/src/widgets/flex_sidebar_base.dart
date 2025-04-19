@@ -3,7 +3,6 @@ import 'package:flex_sidebar/src/themes/flex_theme_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flex_sidebar/src/widgets/flex_sidebar_item.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter/foundation.dart';
 
 class FlexSidebar extends StatefulWidget {
   const FlexSidebar({
