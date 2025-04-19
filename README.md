@@ -29,12 +29,15 @@ Add `flex_sidebar` to your `pubspec.yaml`:
 ```yaml
 dependencies:
   flex_sidebar: ^1.0.0
-Or install it via the command line:
 ```
+
+Or install it via the command line:
 
 ```yaml
 flutter pub add flex_sidebar
 ```
+
+### import
 
 ```dart
 import 'package:flex_sidebar/flex_sidebar.dart';
@@ -95,9 +98,9 @@ class MyApp extends StatelessWidget {
 }
 ```
 
-### Classes and Customization
+## Classes and Customization
 
-#### FlexSidebar
+### FlexSidebar
 
 The FlexSidebar widget is the core component, rendering a customizable sidebar or drawer.
 
@@ -120,7 +123,7 @@ const FlexSidebar({
 - **controller**: A FlexSidebarController to manage the sidebar's state.
 - **theme**: A FlexThemeData object for styling the sidebar.
 
-#### Example with Custom Theme
+### Example with Custom Theme
 
 ```dart
 FlexSidebar(
@@ -150,7 +153,7 @@ FlexSidebar(
 )
 ```
 
-#### FlexSidebarItem
+### FlexSidebarItem
 
 The FlexSidebarItem widget represents a single item, with support for subitems and hover animations.
 
@@ -179,7 +182,7 @@ const FlexSidebarItem({
 - **hoverAnimationEnabled**: A bool to enable/disable hover animations.
 - **subitems**: A List<FlexSidebarItem> for nested subitems.
 
-#### Example with Subitems and Custom Item Styling
+### Example with Subitems and Custom Item Styling
 
 ```dart
 FlexSidebarItem(
@@ -241,13 +244,11 @@ controller.setIndex(1); // Select the second item
 controller.setPinned(false); // Unpin the sidebar
 ```
 
-FlexThemeData
+### FlexThemeData
+
 The FlexThemeData class defines the sidebar's global appearance.
 
-Constructor
-dart
-
-Copy
+```dart
 const FlexThemeData({
 this.normalWidth = 300,
 this.minimizedWidth = 60,
@@ -266,21 +267,24 @@ borderRadius: BorderRadius.all(Radius.circular(40)),
 color: Color.fromARGB(255, 119, 212, 255),
 ),
 })
-Parameters
-normalWidth: Width when expanded.
-minimizedWidth: Width when minimized.
-padding: Padding for the sidebar content.
-margin: Margin around the sidebar.
-itemThemeData: Default FlexItemThemeData for items.
-itemsAlignment: Alignment of items (set to start if scrollableItems is true).
-scrollableItems: Enables scrolling for items.
-footerDivider: Divider for the footer.
-normalDecoration: Decoration when expanded.
-minimizedDecoration: Decoration when minimized.
-Example
-dart
+```
 
-Copy
+**Parameters**
+
+- **normalWidth**: Width when expanded.
+- **minimizedWidth**: Width when minimized.
+- **padding**: Padding for the sidebar content.
+- **margin**: Margin around the sidebar.
+- **itemThemeData**: Default FlexItemThemeData for items.
+- **itemsAlignment**: Alignment of items (set to start if scrollableItems is true).
+- **scrollableItems**: Enables scrolling for items.
+- **footerDivider**: Divider for the footer.
+- **normalDecoration**: Decoration when expanded.
+- **minimizedDecoration**: Decoration when minimized.
+
+#### example:
+
+```dart
 FlexThemeData(
 normalWidth: 300,
 minimizedWidth: 70,
@@ -294,19 +298,13 @@ itemTextStyle: TextStyle(fontSize: 18),
 selectedItemColor: Colors.teal,
 ),
 )
-text
+```
 
-Copy
+### FlexItemThemeData
 
-#### بخش 5: FlexItemThemeData، Mobile Drawer Example، Notes، Contributing، و License
-
-FlexItemThemeData
 The FlexItemThemeData class styles individual sidebar items, overriding the global itemThemeData if specified.
 
-Constructor
-dart
-
-Copy
+```dart
 const FlexItemThemeData({
 this.itemTextStyle = const TextStyle(fontSize: 20),
 this.iconPadding = const EdgeInsetsDirectional.fromSTEB(2, 0, 0, 0),
@@ -318,73 +316,83 @@ this.selectedItemColor = Colors.black,
 this.disabledItemColor = Colors.black12,
 this.iconSize = 30,
 })
-Parameters
-itemTextStyle: Text style for labels.
-iconPadding: Padding for icons.
-labelPadding: Padding for labels.
-itemPadding: Padding for the entire item.
-hoverAnimColor: Color for hover animations.
-itemColor: Default item color.
-selectedItemColor: Color for selected items.
-disabledItemColor: Color for disabled items.
-iconSize: Size of the icon.
-Example
-dart
+```
 
-Copy
+**Parameters**
+
+- **itemTextStyle**: Text style for labels.
+- **iconPadding**: Padding for icons.
+- **labelPadding**: Padding for labels.
+- **itemPadding**: Padding for the entire item.
+- **hoverAnimColor**: Color for hover animations.
+- **itemColor**: Default item color.
+- **selectedItemColor**: Color for selected items.
+- **disabledItemColor**: Color for disabled items.
+- **iconSize**: Size of the icon.
+
+#### Example
+
+```dart
 FlexItemThemeData(
 itemTextStyle: TextStyle(fontSize: 16, color: Colors.blue),
 selectedItemColor: Colors.blueAccent,
 hoverAnimColor: Colors.blue.shade200,
 iconSize: 24,
 )
-Mobile Drawer Example
+```
+
+### Mobile Drawer Example
+
 To use FlexSidebar as a drawer in mobile applications, wrap it in a Drawer widget:
 
-dart
-
-Copy
+```dart
 Scaffold(
-appBar: AppBar(title: Text('FlexSidebar Demo')),
-drawer: Drawer(
-child: FlexSidebar(
-controller: FlexSidebarController(pinned: false),
-primaryWidget: Container(
-height: 100,
-color: Colors.blue.shade100,
-child: Center(child: Text('Header')),
-),
-secondaryWidget: Text('Footer'),
-items: [
-FlexSidebarItem(
-icon: Icon(Icons.home),
-label: Text('Home'),
-onTap: () {
-print('Home tapped');
-},
-),
-FlexSidebarItem(
-icon: Icon(Icons.settings),
-label: Text('Settings'),
-onTap: () {
-print('Settings tapped');
-},
-),
-],
-),
-),
-body: Center(child: Text('Main Content')),
-)
-Notes
-Theming Priority: The styling priority is as follows:
-Direct Element Styles: Styles applied directly to the icon (e.g., Icon.color) and label (e.g., Text.style) of a FlexSidebarItem have the highest priority.
-Item-Specific Theme: The itemThemeData of a FlexSidebarItem overrides the global theme for that item.
-Global Sidebar Theme: The itemThemeData in FlexThemeData applies to all items unless overridden. This hierarchy maximizes customization flexibility.
-Scrollable Items: Enabling scrollableItems in FlexThemeData sets itemsAlignment to MainAxisAlignment.start automatically.
-Mobile Behavior: The pin/unpin button is hidden on mobile devices to optimize the drawer experience.
-RTL Support: The sidebar adapts to right-to-left layouts, with directional padding and margins respected.
-Contributing
+    appBar: AppBar(title: Text('FlexSidebar Demo')),
+    drawer: Drawer(
+      child: FlexSidebar(
+        controller: FlexSidebarController(pinned: false),
+        primaryWidget: Container(
+          height: 100,
+          color: Colors.blue.shade100,
+          child: Center(child: Text('Header')),
+        ),
+        secondaryWidget: Text('Footer'),
+        items: [
+          FlexSidebarItem(
+            icon: Icon(Icons.home),
+            label: Text('Home'),
+            onTap: () {
+              print('Home tapped');
+            },
+          ),
+          FlexSidebarItem(
+            icon: Icon(Icons.settings),
+            label: Text('Settings'),
+            onTap: () {
+              print('Settings tapped');
+            },
+          ),
+        ],
+      ),
+    ),
+    body: Center(child: Text('Main Content')),
+  )
+```
+
+### Notes
+
+- **Theming Priority**: The styling priority is as follows:
+- **Direct Element Styles**: Styles applied directly to the icon (e.g., Icon.color) and label (e.g., Text.style) of a FlexSidebarItem have the highest priority.
+- **Item-Specific Theme**: The itemThemeData of a FlexSidebarItem overrides the global theme for that item.
+- **Global Sidebar Theme**: The itemThemeData in FlexThemeData applies to all items unless overridden. This hierarchy maximizes customization flexibility.
+- **Scrollable Items**: Enabling scrollableItems in FlexThemeData sets itemsAlignment to MainAxisAlignment.start automatically.
+- **Mobile Behavior**: The pin/unpin button is hidden on mobile devices to optimize the drawer experience.
+- **RTL Support**: The sidebar adapts to right-to-left layouts, with directional padding and margins respected.
+
+## Contributing
+
 Contributions are welcome! Please submit issues or pull requests to the GitHub repository.
 
-License
+## License
+
 This package is licensed under the MIT License.
