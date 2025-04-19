@@ -100,6 +100,8 @@ class MyApp extends StatelessWidget {
 
 ## Classes and Customization
 
+![description](https://github.com/HamedMohtadi/flex_sidebar/blob/main/example/repo/description.png?raw=true)
+
 ### FlexSidebar
 
 The FlexSidebar widget is the core component, rendering a customizable sidebar or drawer.
@@ -382,9 +384,9 @@ Scaffold(
 ### Notes
 
 - **Theming Priority**: The styling priority is as follows:
-- **Direct Element Styles**: Styles applied directly to the icon (e.g., Icon.color) and label (e.g., Text.style) of a FlexSidebarItem have the highest priority.
-- **Item-Specific Theme**: The itemThemeData of a FlexSidebarItem overrides the global theme for that item.
-- **Global Sidebar Theme**: The itemThemeData in FlexThemeData applies to all items unless overridden. This hierarchy maximizes customization flexibility.
+  **_Direct Element Styles_**: Styles applied directly to the icon (e.g., Icon.color) and label (e.g., Text.style) of a FlexSidebarItem have the highest priority.
+  **_Item-Specific Theme_**: The itemThemeData of a FlexSidebarItem overrides the global theme for that item.
+  **_Global Sidebar Theme_**: The itemThemeData in FlexThemeData applies to all items unless overridden. This hierarchy maximizes customization flexibility.
 - **Scrollable Items**: Enabling scrollableItems in FlexThemeData sets itemsAlignment to MainAxisAlignment.start automatically.
 - **Mobile Behavior**: The pin/unpin button is hidden on mobile devices to optimize the drawer experience.
 - **RTL Support**: The sidebar adapts to right-to-left layouts, with directional padding and margins respected.
