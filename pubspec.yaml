@@ -4,8 +4,6 @@ version: 1.0.1
 homepage: https://github.com/HamedMohtadi/flex_sidebar
 repository: https://github.com/HamedMohtadi/flex_sidebar
 
-publisher: acrow.ir
-
 topics:
   - sidebar
   - drawer
