@@ -59,10 +59,14 @@ class _RowExampleState extends State<RowExample> {
                 label: Text("regular Item"),
               ),
               FlexSidebarItem(
-                  icon: Icon(Icons.disabled_by_default),
+                  icon: Icon(
+                    Icons.disabled_by_default,
+                  ),
                   label: Text("disabled Item")),
               FlexSidebarItem(
-                icon: Icon(Icons.dashboard_customize),
+                icon: Icon(
+                  Icons.dashboard_customize,
+                ),
                 onTap: () {
                   setState(() {
                     label = "Custom Item";

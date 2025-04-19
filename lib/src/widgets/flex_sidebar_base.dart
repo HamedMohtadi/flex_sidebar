@@ -78,8 +78,8 @@ class _FlexSidebarState extends State<FlexSidebar> {
                 ),
                 Expanded(
                   child: widget.theme.scrollableItems
-                      ? SingleChildScrollView(child: _ItemsListWidget())
-                      : _ItemsListWidget(),
+                      ? SingleChildScrollView(child: _itemsListWidget())
+                      : _itemsListWidget(),
                 ),
                 Column(
                   children: [
@@ -112,7 +112,7 @@ class _FlexSidebarState extends State<FlexSidebar> {
     );
   }
 
-  Widget _ItemsListWidget() {
+  Widget _itemsListWidget() {
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: widget.theme.itemsAlignment,
