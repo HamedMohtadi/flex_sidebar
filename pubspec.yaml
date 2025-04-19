@@ -1,8 +1,10 @@
 name: flex_sidebar
 description: "A highly customizable sidebar and drawer widget for Flutter projects, supporting Android, iOS, Web, and Desktop."
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/HamedMohtadi/flex_sidebar
 repository: https://github.com/HamedMohtadi/flex_sidebar
+
+publisher: acrow.ir
 
 topics:
   - sidebar

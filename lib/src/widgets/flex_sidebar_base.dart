@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flex_sidebar/src/controller/flex_sidebar_controller.dart';
 import 'package:flex_sidebar/src/themes/flex_theme_data.dart';
 import 'package:flutter/material.dart';
@@ -84,24 +83,22 @@ class _FlexSidebarState extends State<FlexSidebar> {
                 Column(
                   children: [
                     widget.theme.footerDivider,
-                    (!kIsWeb && (Platform.isAndroid || Platform.isIOS))
-                        ? const SizedBox.shrink()
-                        : MaterialButton(
-                            onPressed: () {
-                              setState(() {
-                                _pinned = !_pinned;
-                              });
-                            },
-                            child: _minimized
-                                ? const SizedBox.shrink()
-                                : Center(
-                                    child: Icon(
-                                      _pinned
-                                          ? Icons.push_pin
-                                          : Icons.push_pin_outlined,
-                                    ),
-                                  ),
-                          ),
+                    MaterialButton(
+                      onPressed: () {
+                        setState(() {
+                          _pinned = !_pinned;
+                        });
+                      },
+                      child: _minimized
+                          ? const SizedBox.shrink()
+                          : Center(
+                              child: Icon(
+                                _pinned
+                                    ? Icons.push_pin
+                                    : Icons.push_pin_outlined,
+                              ),
+                            ),
+                    ),
                   ],
                 )
               ],
