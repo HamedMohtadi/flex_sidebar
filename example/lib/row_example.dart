@@ -12,6 +12,22 @@ class _RowExampleState extends State<RowExample> {
   String label = "Selected Item";
   @override
   Widget build(BuildContext context) {
+    Row(
+      children: [
+        FlexSidebar(
+          primaryWidget: Image.asset('assets/images/header.png'),
+          secondaryWidget: Text("This can be a description"),
+          controller: FlexSidebarController(),
+          items: [
+            FlexSidebarItem(
+              icon: Icon(Icons.import_contacts),
+              label: Text("contacts"),
+            ),
+          ],
+        ),
+      ],
+    );
+
     return Material(
       color: Theme.of(context).primaryColor.withAlpha(100),
       child: Row(
