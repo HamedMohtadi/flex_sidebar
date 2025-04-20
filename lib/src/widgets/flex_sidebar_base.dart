@@ -1,9 +1,13 @@
+// Import necessary packages and dependencies.
 import 'package:flex_sidebar/src/controller/flex_sidebar_controller.dart';
 import 'package:flex_sidebar/src/themes/flex_theme_data.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flex_sidebar/src/widgets/flex_sidebar_item.dart';
 import 'package:collection/collection.dart';
 
+/// A customizable sidebar widget with support for theming, animations,
+/// and hierarchical items.
 class FlexSidebar extends StatefulWidget {
   const FlexSidebar({
     super.key,
@@ -14,10 +18,19 @@ class FlexSidebar extends StatefulWidget {
     this.theme = const FlexThemeData(),
   });
 
+  /// Controller to manage the state of the sidebar (e.g., pinned, index).
   final FlexSidebarController controller;
+
+  /// List of sidebar items to display.
   final List<FlexSidebarItem> items;
+
+  /// Widget displayed at the top of the sidebar.
   final Widget primaryWidget;
+
+  /// Widget displayed below the primary widget when the sidebar is expanded.
   final Widget secondaryWidget;
+
+  /// Theme data for customizing the appearance of the sidebar.
   final FlexThemeData theme;
 
   @override
@@ -25,26 +38,38 @@ class FlexSidebar extends StatefulWidget {
 }
 
 class _FlexSidebarState extends State<FlexSidebar> {
+  // Indicates whether the sidebar is minimized.
   late bool _minimized;
+
+  // Indicates whether the sidebar is pinned.
   late bool _pinned;
+
+  // Tracks the selected item and subitem indices.
   late Map<int, int> _currentIndex;
+
   @override
   void initState() {
     super.initState();
+    // Initialize the pinned and minimized states based on the controller.
     _pinned = widget.controller.pinned;
     _minimized = !widget.controller.pinned;
+
+    // Initialize the current index with the controller's index.
     _currentIndex = {widget.controller.index: -1};
   }
 
   @override
   Widget build(BuildContext context) {
     return AnimatedSize(
+      // Animate size changes with a smooth transition.
       duration: const Duration(milliseconds: 500),
       curve: widget.controller.resizeAnimCurve,
       child: SizedBox(
+        // Adjust the width of the sidebar based on its state (minimized or expanded).
         width:
             _minimized ? widget.theme.minimizedWidth : widget.theme.normalWidth,
         child: MouseRegion(
+          // Handles mouse hover events to toggle the minimized state.
           onEnter: (_) => _pinned
               ? {}
               : setState(() {
@@ -56,6 +81,7 @@ class _FlexSidebarState extends State<FlexSidebar> {
                   _minimized = true;
                 }),
           child: Container(
+            // Applies the appropriate decoration based on the sidebar state.
             decoration: _minimized
                 ? widget.theme.minimizedDecoration
                 : widget.theme.normalDecoration,
@@ -64,6 +90,7 @@ class _FlexSidebarState extends State<FlexSidebar> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                // Top section containing primary and secondary widgets.
                 Column(
                   children: [
                     widget.primaryWidget,
@@ -74,30 +101,45 @@ class _FlexSidebarState extends State<FlexSidebar> {
                           ),
                   ],
                 ),
+                // Middle section containing the list of items.
                 Expanded(
                   child: widget.theme.scrollableItems
+                      // If scrollableItems is true, wrap the items list in a scrollable widget.
                       ? SingleChildScrollView(child: _itemsListWidget())
+                      // Otherwise, display the items list directly.
                       : _itemsListWidget(),
                 ),
+                // Bottom section containing the footer and pin button.
                 Column(
                   children: [
+                    // Divider widget to separate the footer from the rest of the sidebar.
                     widget.theme.footerDivider,
-                    MaterialButton(
-                      onPressed: () {
-                        setState(() {
-                          _pinned = !_pinned;
-                        });
-                      },
-                      child: _minimized
-                          ? const SizedBox.shrink()
-                          : Center(
-                              child: Icon(
-                                _pinned
-                                    ? Icons.push_pin
-                                    : Icons.push_pin_outlined,
-                              ),
-                            ),
-                    ),
+                    // Conditionally render the pin button based on the platform.
+                    ((defaultTargetPlatform == TargetPlatform.android) ||
+                            (defaultTargetPlatform == TargetPlatform.iOS))
+                        // On mobile platforms, the pin button is hidden.
+                        ? const SizedBox.shrink()
+                        : MaterialButton(
+                            // Toggles the pinned state of the sidebar when pressed.
+                            onPressed: () {
+                              setState(() {
+                                _pinned = !_pinned;
+                              });
+                            },
+                            // If the sidebar is minimized, hide the button.
+                            child: _minimized
+                                ? const SizedBox.shrink()
+                                // Otherwise, display the pin/unpin icon based on the pinned state.
+                                : Center(
+                                    child: Icon(
+                                      _pinned
+                                          ? Icons
+                                              .push_pin // Icon for pinned state.
+                                          : Icons
+                                              .push_pin_outlined, // Icon for unpinned state.
+                                    ),
+                                  ),
+                          ),
                   ],
                 )
               ],
@@ -108,11 +150,13 @@ class _FlexSidebarState extends State<FlexSidebar> {
     );
   }
 
+  /// Builds the list of sidebar items and their subitems.
   Widget _itemsListWidget() {
     return Column(
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: widget.theme.itemsAlignment,
       children: [
+        // Map each item to a FlexSidebarItem widget.
         ...widget.items.mapIndexed(
           (i, e) => FlexSidebarItem(
             icon: e.icon,
@@ -121,6 +165,7 @@ class _FlexSidebarState extends State<FlexSidebar> {
                 ? null
                 : () {
                     setState(() {
+                      // Update the current index when an item is tapped.
                       widget.controller.setIndex(i);
                       _currentIndex = {i: -1};
                     });
@@ -139,6 +184,7 @@ class _FlexSidebarState extends State<FlexSidebar> {
                         ? null
                         : () {
                             setState(() {
+                              // Update the current index when a subitem is tapped.
                               widget.controller.setIndex(i);
                               _currentIndex = {i: j};
                             });

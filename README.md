@@ -28,7 +28,7 @@ Add `flex_sidebar` to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  flex_sidebar: ^1.0.1
+  flex_sidebar: ^1.0.2
 ```
 
 Or install it via the command line:
