@@ -144,9 +144,13 @@ class _FlexSidebarItemState extends State<FlexSidebarItem>
                               onPressed: () => setState(() {
                                     _extended = !_extended;
                                   }),
-                              icon: Icon(_extended
-                                  ? Icons.keyboard_arrow_up
-                                  : Icons.keyboard_arrow_down))
+                              icon: Icon(
+                                _extended
+                                    ? Icons.keyboard_arrow_up
+                                    : Icons.keyboard_arrow_down,
+                                color: itemThemeData
+                                    .itemColor, // set extend Icon in nested items mode to itemColor
+                              ))
                           : SizedBox.shrink()
                 ],
               ),
